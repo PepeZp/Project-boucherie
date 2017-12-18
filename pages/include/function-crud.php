@@ -1,4 +1,6 @@
 <?php
+    
+    cryptPaswword= ("Mike");
 
     $message=false;
 
@@ -60,6 +62,17 @@ function registerClient($client){
         
 }
 
+//salt clé aléatoire
+function comparePassword($password){ 
+    crypt= sha1(rand(11,22)"Mike".uniqid()."Mike"rand(11,22));
+    return crypt($password, $script);
+    }
+
+function comparePassword($hashed_password, $password){
+    if (hash_equals($hashed_password, crypt($password, $hashed_password)))?true:false;
+    }
+    
+}
 
 
 ?>
