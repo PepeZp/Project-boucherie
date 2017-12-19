@@ -20,10 +20,10 @@
                         <form role="form" method="POST">
                             <fieldset>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus>
+                                    <input class="form-control" placeholder="E-mail" name="email" id="email" type="email" autofocus>
                                 </div>
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="Password" name="password" type="password" value="">
+                                    <input class="form-control" placeholder="Password" name="password" id="password" type="password" value="">
                                 </div>
                                 <div class="checkbox">
                                     <label>
@@ -35,7 +35,7 @@
                                 <div style=" text-align: center; margin: 10% 0% 0% 0%; ">
                                     <a href="register.php" class="btn btn-lg btn-block btn-primary">Register</a>
                                 </div>
-                                  <? php= $message ?>
+                                  <div id=$message> </div>        
                             </fieldset>
                         </form>
                     </div>
@@ -44,17 +44,46 @@
         </div>
     </div>
 
-    <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
+   <?php require ("page_include/footer.php");?>
+    
+    <script>
+       $("form").submit(function(e){
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+            e.preventDefault();
+            $("#message").html("");
+            let error = false;
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+            if($("#email").val().trim() == ""){
+                $("#message").append("<p>Veillez remplir votre email</p>");
+                error = true;
+            }
+            if($("#password").val().trim() == ""){
+                $("#message").append("<p>Veillez remplir votre password</p>");
+                error = true;
+            }
+            var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            if(!re.test($("#email").val().trim().toLowerCase())){
+                $("#message").append("<p>Veillez remplir un email correct</p>");
+                error = true;
+            }
 
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
+            if(!error){
+                var request = $.ajax({
+                    url: "http://localhost/Mike/projet/pages/include/api.php",
+                    method: "POST",
+                    data: $("form").serialize(),
+                    dataType: "json"
+                })
+                .done(function( msg ) {
+                    $( "#log" ).html( msg );
+                })
+                .fail(function( jqXHR, textStatus ) {
+                    alert( "Request failed: " + textStatus );
+                });
+            }
+        })
+        
+    </script>
 
 </body>
 

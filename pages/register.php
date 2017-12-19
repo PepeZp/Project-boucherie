@@ -43,7 +43,7 @@
                     $retour= false;
                 }
 
-                if($retour == false){
+                if($retour == true){
                     registerClient($_POST);
                     header('location:index.html');
                     exit;
@@ -98,6 +98,7 @@
                                 </div>
                                 <!-- Change this to a button or input when using this as a form -- Pepe-->
                                  <button type="submit" class="btn btn-lg btn-success btn-block">Register</button>
+                                 <?= $message ?>
                                 <div style=" text-align: center; margin: 10% 0% 0% 0%; ">
                                     <a href="login.php" class="btn btn-lg btn-block btn-primary">Login</a>
                                 </div>
